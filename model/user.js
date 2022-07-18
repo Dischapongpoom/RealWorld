@@ -29,6 +29,7 @@ UserSchema.methods.generateJWT = function () {
   }, process.env.JWT_KEY)
 }
 
+// Generate Token
 UserSchema.methods.toAuthJSON = function () {
   return {
 
@@ -46,13 +47,13 @@ UserSchema.methods.validPassword = function (password) {
   return (this.hash === hashs)
 }
 
-//Hash password
+// Hash password
 UserSchema.methods.setPassword = function (password) {
   this.salt = crypto.randomBytes(16).toString('hex')
   this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 64, 'sha512').toString('hex')
 }
 
-//Get Profile form
+// Get Profile form
 UserSchema.methods.toProfileJSONFor = function (user) {
   return {
     username: this.username,
@@ -62,6 +63,7 @@ UserSchema.methods.toProfileJSONFor = function (user) {
   }
 }
 
+// Follow
 UserSchema.methods.follow = function (id) {
   if (this.following.indexOf(id) === -1) {
     this.following.push(id)
@@ -69,6 +71,7 @@ UserSchema.methods.follow = function (id) {
   return this.save()
 }
 
+// Unfollow
 UserSchema.methods.unfollow = function (id) {
   if (this.following.indexOf(id) !== -1) {
     this.following.remove(id)
@@ -76,30 +79,33 @@ UserSchema.methods.unfollow = function (id) {
   return this.save()
 }
 
+// Check is Following
 UserSchema.methods.isFollowing = function (id) {
   return this.following.some((followId) => {
     return followId.toString() === id.toString()
   })
 }
 
+
+// Check Favorite
 UserSchema.methods.isFavorite = function (id) {
   return this.favorites.some((favoriteId) => {
     return favoriteId.toString() === id.toString()
   })
 }
 
+// Favorite
 UserSchema.methods.favorite = function(id){
   if(this.favorites.indexOf(id) === -1){
     this.favorites.push(id)
   }
-
   return this.save()
 }
 
+// Unfavorite
 UserSchema.methods.unfavorite = function(id){
   this.favorites.remove(id)
   return this.save()
 }
-
 
 module.exports = mongoose.model("User", UserSchema);

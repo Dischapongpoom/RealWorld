@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const User = mongoose.model('User')
 
 const commentSchema = new mongoose.Schema({
     body: String,

@@ -6,19 +6,12 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const passport = require('passport')
 
-// const auth = require('./middleware/auth')
-
-// const userAPI = require('./routes/user.route')
-
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 app.use(bodyParser.json()) // for parsing application/json
 require('./config/passport')
-// app.use(bodyParser.urlencoded({ extended: true }))
-
-
 
 const { API_PORT } = process.env
 const port = process.env.PORT || API_PORT

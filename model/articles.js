@@ -16,7 +16,6 @@ const articleSchema = new mongoose.Schema({
 
 articleSchema.plugin(uniqueValidator, { message: 'is already taken' })
 
-
 articleSchema.pre('validate', function (next) {
   if (!this.slug) {
     this.slugify()
